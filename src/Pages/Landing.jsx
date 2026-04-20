@@ -9,71 +9,51 @@ const Landing = () => {
   const container = useRef(null);
 
   useGSAP(() => {
-    // Tunnel zoom effect timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
-        end: "+=150%", // controls how long the scroll takes
-        scrub: 1,      // smooth scrubbing
-        pin: true,     // pin the landing section while zooming
+        end: "+=150%",
+        scrub: 1,
+        pin: true,
       }
     });
 
-    // 1. Open the mask! The arch becomes full screen
-    // Using a proxy object prevents browser bugs where GSAP can't interpolate vw/vh/px mixed units
-    const maskObj = { top: 20, side: 30, round: 20 };
-    tl.to(maskObj, {
-      top: 0,
-      side: 0,
-      round: 0,
-      ease: "power2.inOut",
-      onUpdate: () => {
-        const gate = document.getElementById("sunset-gate");
-        if (gate) {
-          gate.style.clipPath = `inset(${maskObj.top}vh ${maskObj.side}vw 0px ${maskObj.side}vw round ${maskObj.round}vw ${maskObj.round}vw 0px 0px)`;
-        }
-      }
-    }, 0);
-    
-    // 2. Fade out the old UI (logos, nav, title, subtitle)
-    tl.to(".z-30:not(.after-tunnel-text)", {
-      opacity: 0,
-      ease: "power1.inOut"
-    }, 0);
-
-    // 3. Move astronaut to the center of the full screen
-    tl.to("#astronaut-container", {
-      y: "-15vh",
-      scale: 1.2,
+    // 1. Tunnel zoom: scale up stars-background so the mask hole swallows the screen
+    tl.to(".stars-background", {
+      scale: 25,
       ease: "power2.inOut"
     }, 0);
 
-    // 4. Fade in the new description text
+    // 2. Astronaut shifts up
+    tl.to("#astronaut-container", {
+      y: "-30vh",
+      ease: "power2.inOut"
+    }, 0);
+
+    // 3. Main title and subtitle shift up and fade out with stagger
+    tl.to(".main-title, .main-subtitle", {
+      y: "-15vh",
+      opacity: 0,
+      ease: "power2.inOut",
+     
+    }, 0);
+
+    // 4. After tunnel text comes up and fades in
     tl.to(".after-tunnel-text", {
       opacity: 1,
       y: 0,
-      ease: "power2.inOut"
-    }, 0.5); // Starts halfway through the animation
-
+      ease: "power2.out"
+    }, 0.1);
   }, { scope: container });
 
   // Generate an array for the tick marks
   const ticks = Array.from({ length: 40 });
   return (
-    <div ref={container} className="relative w-full h-screen bg-black overflow-hidden font-sans text-white">
-      {/* Deep Space Starry Background */}
-      <div 
-        className="absolute inset-0 z-0 bg-black stars-background"
-        style={{ clipPath: "inset(0vh 0vw 0 0vw round 0px 0px 0 0)" }}
-      >
-        <img
-          src="/images/stars.png"
-          alt="Stars"
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-90"
-        />
-      </div>
-
+    <div
+      ref={container}
+      className="relative w-full h-screen bg-white overflow-hidden font-sans text-white"
+    >
       {/* Top Left Logo Placeholder */}
       <div className="absolute top-10 left-10 z-30 flex items-center gap-3">
         <img src="/images/logo.png" alt="" className="w-[40%]" />
@@ -189,53 +169,55 @@ const Landing = () => {
       </div>
 
       {/* Main Center Content */}
-      <div className="relative w-full h-full flex flex-col items-center justify-end pb-0 z-10">
+      <div className="relative w-full h-full flex flex-col items-center justify-end pb-0">
         {/* Arch Mask Window */}
-        <div className="absolute -bottom-10 border-[1px] bg-transparent border-white/20 rounded-full scale-110 w-[80vh] h-[80vh] pointer-events-none"></div>
-        <div className="absolute -bottom-10 border-[1px] bg-transparent border-white/20 rounded-full scale-120 w-[80vh] h-[80vh] pointer-events-none"></div>
-        <div className="absolute -bottom-10 border-[1px] bg-transparent border-white/20 rounded-full scale-130 w-[80vh] h-[80vh] pointer-events-none"></div>
-        {/* TUNNEL ZOOM EFFECT FIX */}
-        <div
-          id="sunset-gate"
-          className="absolute inset-0 z-10"
-          style={{ clipPath: "inset(20vh 30vw 0px 30vw round 20vw 20vw 0px 0px)" }}
-        >
+
+        {/* 1. SUNSET GATE (bg.png) - Bottom layer */}
+        <div id="sunset-gate" className="absolute z-0 w-full h-full">
           {/* Sunset Sky Background inside Arch */}
           <img
             src="/images/bg.png"
             alt="Sunset Sky"
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
-
-          {/* Inner positioning box to match the old 40vw x 80vh layout for the astronaut */}
-          <div id="astronaut-container" className="absolute bottom-0 left-[30vw] w-[40vw] h-[80vh]">
-            <img
-              src="/images/astro.png"
-              alt="Astronaut"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] object-contain pointer-events-none drop-shadow-xl hover:-translate-y-[55%] transition-transform duration-700"
-            />
-          </div>
         </div>
 
-        {/* New Text for after tunnel */}
-        <div className="absolute top-[60vh] left-0 w-full text-center z-30 pointer-events-none opacity-0 after-tunnel-text translate-y-10">
-          <p className="text-[20px] sm:text-[24px] font-light text-[#333] max-w-3xl mx-auto leading-relaxed drop-shadow-md" style={{ fontFamily: "'Gilroy', sans-serif" }}>
-            We make ambitious ideas for ambitious brands. Five offices, one studio, united by optimism, collaboration, and craft. Find us in Los Angeles, New York, London, Berlin and Sydney.
-          </p>
+        {/* 2. ASTRONAUT - Above sunset sky */}
+        <div
+          id="astronaut-container"
+          className="absolute z-10 -bottom-10 left-[30vw] w-[40vw] h-[80vh]"
+        >
+          <img
+            src="/images/astro.png"
+            alt="Astronaut"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] object-contain pointer-events-none drop-shadow-xl hover:-translate-y-[55%] transition-transform duration-700"
+          />
         </div>
 
-        {/* Foreground Flowers Layer */}
-        <img
-          src="/images/flowers.png"
-          alt="Foreground Flowers"
-          className="absolute -bottom-5 left-0 w-full object-cover object-bottom z-20 pointer-events-none drop-shadow-2xl"
-        />
+        {/* 3. STARS BACKGROUND - Above astronaut */}
+        <div
+          className="absolute w-full  h-screen z-[20] bg-black stars-background"
+          style={{
+            transformOrigin: "50% 84%",
+            WebkitMaskImage:
+              "radial-gradient(15% 34% at 49% 84%, transparent 100%, black 100%)",
+            maskImage:
+              "radial-gradient(23% 60% at 50% 84%, transparent 100%, black 100%)",
+          }}
+        >
+          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-110 w-[80vh] h-[80vh] pointer-events-none"></div>
+          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-120 w-[80vh] h-[80vh] pointer-events-none"></div>
+          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-130 w-[80vh] h-[80vh] pointer-events-none"></div>
+          <img
+            src="/images/stars.png"
+            alt="Stars"
+            className="absolute w-full h-full object-cover pointer-events-none opacity-90"
+          />
+        </div>
 
-        {/* Floating Typography Overlapping Arch */}
-        {/* Split to avoid Stacking Context issues on Mix-Blend-Mode */}
-
+        {/* 4. LIMITLESS STUDIO TEXT & SUBTITLE - Above stars */}
         {/* Main Title with Blend Mode */}
-        <div className="absolute top-[220px] left-0 w-full text-center z-30 pointer-events-none mix-blend-difference">
+        <div className="main-title absolute top-[220px] left-0 w-full text-center z-30 pointer-events-none mix-blend-difference">
           <h1
             className="text-[64px] sm:text-[96px] xl:text-[128px] font-normal leading-none inline-block"
             style={{
@@ -248,7 +230,7 @@ const Landing = () => {
         </div>
 
         {/* Subtitle */}
-        <div className="absolute top-[300px] sm:top-[340px] xl:top-[360px] left-0 w-full text-center z-30 pointer-events-none">
+        <div className="main-subtitle absolute top-[300px] sm:top-[340px] xl:top-[360px] left-0 w-full text-center z-30 pointer-events-none">
           <p
             className="text-sm sm:text-lg md:text-[20px] font-light text-white tracking-wide drop-shadow-md"
             style={{ fontFamily: "'Gilroy', sans-serif" }}
@@ -256,6 +238,28 @@ const Landing = () => {
             Where vision becomes experience
           </p>
         </div>
+
+        {/* New Text for after tunnel */}
+        <div className="absolute top-[60vh] left-0 w-full text-center z-30 pointer-events-none opacity-0 after-tunnel-text translate-y-10 mix-blend-difference">
+          <p
+            className="text-[20px] sm:text-[24px] font-light text-white max-w-3xl mx-auto leading-relaxed drop-shadow-md"
+            style={{ fontFamily: "'Gilroy', sans-serif" }}
+          >
+            <span className="text-[50px]"style={{
+              fontFamily: "'Catavalo', Georgia, serif",
+           
+            }}>We</span> make ambitious ideas for ambitious brands. Five offices, one
+            studio, united by optimism, collaboration, and craft. Find us in Los
+            Angeles, New York, London, Berlin and Sydney.
+          </p>
+        </div>
+
+        {/* 5. FLOWERS - Topmost layer */}
+        <img
+          src="/images/flowers.png"
+          alt="Foreground Flowers"
+          className="absolute -bottom-5 left-0 w-full object-cover object-bottom z-[999] pointer-events-none drop-shadow-2xl"
+        />
       </div>
     </div>
   );
