@@ -1,12 +1,72 @@
-import React from "react";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Landing = () => {
+  const container = useRef(null);
+
+  useGSAP(() => {
+    // Tunnel zoom effect timeline
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container.current,
+        start: "top top",
+        end: "+=150%", // controls how long the scroll takes
+        scrub: 1,      // smooth scrubbing
+        pin: true,     // pin the landing section while zooming
+      }
+    });
+
+    // 1. Open the mask! The arch becomes full screen
+    // Using a proxy object prevents browser bugs where GSAP can't interpolate vw/vh/px mixed units
+    const maskObj = { top: 20, side: 30, round: 20 };
+    tl.to(maskObj, {
+      top: 0,
+      side: 0,
+      round: 0,
+      ease: "power2.inOut",
+      onUpdate: () => {
+        const gate = document.getElementById("sunset-gate");
+        if (gate) {
+          gate.style.clipPath = `inset(${maskObj.top}vh ${maskObj.side}vw 0px ${maskObj.side}vw round ${maskObj.round}vw ${maskObj.round}vw 0px 0px)`;
+        }
+      }
+    }, 0);
+    
+    // 2. Fade out the old UI (logos, nav, title, subtitle)
+    tl.to(".z-30:not(.after-tunnel-text)", {
+      opacity: 0,
+      ease: "power1.inOut"
+    }, 0);
+
+    // 3. Move astronaut to the center of the full screen
+    tl.to("#astronaut-container", {
+      y: "-15vh",
+      scale: 1.2,
+      ease: "power2.inOut"
+    }, 0);
+
+    // 4. Fade in the new description text
+    tl.to(".after-tunnel-text", {
+      opacity: 1,
+      y: 0,
+      ease: "power2.inOut"
+    }, 0.5); // Starts halfway through the animation
+
+  }, { scope: container });
+
   // Generate an array for the tick marks
   const ticks = Array.from({ length: 40 });
   return (
-    <div className="relative w-full h-screen bg-[#050505] overflow-hidden font-sans text-white">
+    <div ref={container} className="relative w-full h-screen bg-black overflow-hidden font-sans text-white">
       {/* Deep Space Starry Background */}
-      <div className="absolute inset-0 z-0 bg-black">
+      <div 
+        className="absolute inset-0 z-0 bg-black stars-background"
+        style={{ clipPath: "inset(0vh 0vw 0 0vw round 0px 0px 0 0)" }}
+      >
         <img
           src="/images/stars.png"
           alt="Stars"
@@ -134,9 +194,11 @@ const Landing = () => {
         <div className="absolute -bottom-10 border-[1px] bg-transparent border-white/20 rounded-full scale-110 w-[80vh] h-[80vh] pointer-events-none"></div>
         <div className="absolute -bottom-10 border-[1px] bg-transparent border-white/20 rounded-full scale-120 w-[80vh] h-[80vh] pointer-events-none"></div>
         <div className="absolute -bottom-10 border-[1px] bg-transparent border-white/20 rounded-full scale-130 w-[80vh] h-[80vh] pointer-events-none"></div>
+        {/* TUNNEL ZOOM EFFECT FIX */}
         <div
-          className="relative w-[40vw]  h-[80vh] overflow-hidden drop-shadow-2xl"
-          style={{ borderRadius: "350px 350px 0 0" }}
+          id="sunset-gate"
+          className="absolute inset-0 z-10"
+          style={{ clipPath: "inset(20vh 30vw 0px 30vw round 20vw 20vw 0px 0px)" }}
         >
           {/* Sunset Sky Background inside Arch */}
           <img
@@ -145,14 +207,21 @@ const Landing = () => {
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
 
-          {/* Astronaut inside Arch */}
-          <img
-            src="/images/astro.png"
-            alt="Astronaut"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] object-contain pointer-events-none drop-shadow-xl hover:-translate-y-[55%] transition-transform duration-700"
-          />
+          {/* Inner positioning box to match the old 40vw x 80vh layout for the astronaut */}
+          <div id="astronaut-container" className="absolute bottom-0 left-[30vw] w-[40vw] h-[80vh]">
+            <img
+              src="/images/astro.png"
+              alt="Astronaut"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] object-contain pointer-events-none drop-shadow-xl hover:-translate-y-[55%] transition-transform duration-700"
+            />
+          </div>
+        </div>
 
-          {/* Glowing Arch Border */}
+        {/* New Text for after tunnel */}
+        <div className="absolute top-[60vh] left-0 w-full text-center z-30 pointer-events-none opacity-0 after-tunnel-text translate-y-10">
+          <p className="text-[20px] sm:text-[24px] font-light text-[#333] max-w-3xl mx-auto leading-relaxed drop-shadow-md" style={{ fontFamily: "'Gilroy', sans-serif" }}>
+            We make ambitious ideas for ambitious brands. Five offices, one studio, united by optimism, collaboration, and craft. Find us in Los Angeles, New York, London, Berlin and Sydney.
+          </p>
         </div>
 
         {/* Foreground Flowers Layer */}
@@ -180,7 +249,7 @@ const Landing = () => {
 
         {/* Subtitle */}
         <div className="absolute top-[300px] sm:top-[340px] xl:top-[360px] left-0 w-full text-center z-30 pointer-events-none">
-          <p 
+          <p
             className="text-sm sm:text-lg md:text-[20px] font-light text-white tracking-wide drop-shadow-md"
             style={{ fontFamily: "'Gilroy', sans-serif" }}
           >
