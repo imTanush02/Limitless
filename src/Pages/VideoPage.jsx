@@ -79,7 +79,7 @@ const VideoPage = () => {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-      className="relative flex items-center justify-center w-full h-screen bg-black font-sans text-white"
+      className="relative flex -mt-[0.1px] items-center justify-center w-full h-screen bg-black font-sans text-white"
     >
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/50 pointer-events-none"></div>
