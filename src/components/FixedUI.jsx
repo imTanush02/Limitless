@@ -19,7 +19,6 @@ const FixedUI = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
       const targetY = scrollY * 0.5;
 
-      // Lerp smoothly towards the target
       smoothY.current += (targetY - smoothY.current) * 0.12;
 
       const wrappedY = -mod(smoothY.current, 45);
