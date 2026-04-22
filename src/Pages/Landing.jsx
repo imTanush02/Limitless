@@ -14,7 +14,7 @@ const Landing = () => {
         scrollTrigger: {
           trigger: container.current,
           start: "top top",
-          end: "+=300%",
+          end: "+=150%",
           scrub: 1,
           pin: true,
         },
