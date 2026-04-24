@@ -62,6 +62,16 @@ const Landing = () => {
         },
         0,
       );
+      tl.to(
+        "#portal-container",
+        {
+          scale: 1.8,
+      
+          transformOrigin: "center bottom",
+          ease: "power2.inOut",
+        },
+        0,
+      );
 
       // 3. Main title and subtitle shift up and fade out with stagger
       tl.to(
@@ -96,18 +106,12 @@ const Landing = () => {
       {/* Main Center Content */}
       <div className="relative w-full h-full flex flex-col items-center justify-end pb-0">
         {/* 1. SUNSET GATE (bg.png) - Bottom layer */}
-        <div id="sunset-gate" className="absolute z-0 w-full h-full">
-          <img
-            src="/images/bg.png"
-            alt="Sunset Sky"
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          />
-        </div>
+       
 
         {/* 2. ASTRONAUT - Above sunset sky */}
         <div
           id="astronaut-container"
-          className="absolute z-10 -bottom-10 left-[30vw] w-[40vw] h-[80vh]"
+          className="absolute z-[20] -bottom-10 left-[30vw] w-[40vw] h-[80vh]"
         >
           <img
             src="/images/astro.png"
@@ -115,19 +119,22 @@ const Landing = () => {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] object-contain pointer-events-none drop-shadow-xl hover:-translate-y-[55%] transition-transform duration-700"
           />
         </div>
+        <div
+          id="portal-container"
+          className="absolute z-10 bottom-0 left-0 w-full h-full scale-60"
+          style={{ transformOrigin: "center bottom", willChange: "transform" }}
+        >
+          <img
+            src="/images/portal.png"
+            alt="portal"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 object-contain pointer-events-none drop-shadow-xl"
+          />
+        </div>
 
         {/* 3. STARS BACKGROUND - Above astronaut */}
         <div
-          className="absolute w-full  h-screen z-[20] bg-black stars-background"
-          style={{
-            transformOrigin: "30% 84%",
-            "--mask-x": "12%",
-            "--mask-y": "46%",
-            WebkitMaskImage:
-              "radial-gradient(var(--mask-x) var(--mask-y) at 50% 85%, transparent 100%, black 100%)",
-            maskImage:
-              "radial-gradient(var(--mask-x) var(--mask-y) at 50% 85%, transparent 100%, black 100%)",
-          }}
+          className="absolute w-full  h-screen z-0 bg-black stars-background"
+         
         >
           <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-110 w-[80vh] h-[80vh] pointer-events-none"></div>
           <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-120 w-[80vh] h-[80vh] pointer-events-none"></div>
