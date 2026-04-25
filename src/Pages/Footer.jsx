@@ -66,36 +66,11 @@ const Footer = () => {
         </div>
 
         {/* Footer Bottom Bar */}
-        <div className="w-full flex justify-between items-center mt-2 md:mt-4">
-           <div className="w-[60%] flex justify-end">
+        <div className="w-full flex justify-center items-center mt-2 md:mt-4">
+           
             <p className="text-[10px] md:text-xs font-light opacity-50" style={{ fontFamily: "'Gilroy', sans-serif" }}>
              © 2026 Limitless Studio. All Rights Reserved.
            </p>
-           </div>
-           <div className="flex items-center gap-5">
-              <a href="#" className="hover:opacity-100 opacity-70 transition-opacity">
-                {/* Dribbble SVG */}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 4C13.56 4 15.02 4.45 16.27 5.21C15.93 6.03 15.42 6.84 14.77 7.64C12.8 6.94 10.59 6.4 8.24 6.06C9.27 5.03 10.57 4.3 12 4ZM5.09 7.84C7.03 8.16 8.89 8.63 10.61 9.27C9.37 12.18 7.74 14.78 5.75 16.92C4.65 15.54 4 13.84 4 12C4 10.45 4.41 9.02 5.09 7.84ZM6.96 18.23C8.65 16.32 10.09 13.98 11.23 11.3C13.06 11.89 14.71 12.67 16.15 13.62C15.77 15.55 14.99 17.3 13.94 18.77C11.83 18.29 9.49 18.16 6.96 18.23ZM12 20C10.15 20 8.44 19.37 7.05 18.34C9.52 18.22 11.84 18.39 13.95 18.91C13.08 19.64 12.12 20 12 20ZM17.26 18.06C16.35 16.79 15.58 15.41 14.97 13.96C16.51 13.09 18.25 12.44 20.12 12.06C19.98 14.39 18.91 16.48 17.26 18.06ZM20.12 11.02C18.42 11.38 16.8 11.96 15.3 12.72C14.01 11.84 12.51 11.13 10.87 10.6C12.03 8.11 13.56 5.86 15.43 3.9C17.7 4.9 19.38 6.91 19.93 9.3C19.99 9.86 20.06 10.43 20.12 11.02Z"/>
-                </svg>
-              </a>
-              <a href="#" className="hover:opacity-100 opacity-70 transition-opacity">
-                {/* Instagram SVG */}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-              <a href="#" className="hover:opacity-100 opacity-70 transition-opacity">
-                {/* LinkedIn SVG */}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect x="2" y="9" width="4" height="12"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-           </div>
         </div>
       </div>
     </div>
