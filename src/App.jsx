@@ -5,6 +5,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Landing from "./Pages/Landing";
 import VideoPage from "./Pages/VideoPage";
 import TextPage from "./Pages/TextPage";
+import Work from "./Pages/Work";
 import FixedUI from "./Components/FixedUI";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,6 +38,7 @@ const App = () => {
       <Landing />
       <VideoPage />
       <TextPage />
+      <Work />
     </div>
   );
 };
