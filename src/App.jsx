@@ -6,6 +6,7 @@ import Landing from "./Pages/Landing";
 import VideoPage from "./Pages/VideoPage";
 import TextPage from "./Pages/TextPage";
 import Work from "./Pages/Work";
+import WorkWeDo from "./Pages/WorkWeDo";
 import FixedUI from "./Components/FixedUI";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -39,6 +40,7 @@ const App = () => {
       <VideoPage />
       <TextPage />
       <Work />
+      <WorkWeDo />
     </div>
   );
 };
