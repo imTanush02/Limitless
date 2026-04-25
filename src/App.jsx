@@ -8,6 +8,7 @@ import TextPage from "./Pages/TextPage";
 import Work from "./Pages/Work";
 import WorkWeDo from "./Pages/WorkWeDo";
 import OurProcess from "./Pages/OurProcess";
+import Talk from "./Pages/Talk";
 import FixedUI from "./Components/FixedUI";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,6 +44,7 @@ const App = () => {
       <Work />
       <WorkWeDo />
       <OurProcess />
+      <Talk />
     </div>
   );
 };
