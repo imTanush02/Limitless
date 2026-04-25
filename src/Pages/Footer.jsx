@@ -50,7 +50,7 @@ const Footer = () => {
         
         {/* Big Text */}
         <div className="w-full flex justify-center items-center overflow-hidden h-[180px] md:h-[220px] lg:h-[280px]">
-           <h1 className="text-[13vw] font-bold leading-none tracking-tight uppercase" 
+           <h1 className="text-[12vw] font-bold leading-none uppercase" 
                style={{ 
                    fontFamily: "'Catavalo', Georgia, serif",
                    backgroundImage: "url('/images/flowers.png')",
