@@ -66,7 +66,7 @@ const OurProcess = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-screen relative bg-[#0a0a0a] text-white overflow-hidden font-sans">
+    <div ref={containerRef} className="process-section w-full h-screen relative bg-[#0a0a0a] text-white overflow-hidden font-sans">
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
         <img 

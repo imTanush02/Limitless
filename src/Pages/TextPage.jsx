@@ -158,23 +158,11 @@ const TextPage = () => {
   return (
     <div
       ref={container}
-      style={{
-        backgroundImage: "url('/images/stars.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-      className="relative flex items-center justify-center w-full min-h-screen bg-black font-sans text-white overflow-hidden"
+      className="text-page-section relative flex items-center justify-center w-full min-h-screen bg-transparent font-sans text-white overflow-hidden"
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/60 pointer-events-none"></div>
 
-      {/* Subtle gold vertical accent line — left */}
-      <div className="absolute left-[6%] sm:left-[8%] top-[15%] bottom-[15%] w-[2px] bg-gradient-to-b from-transparent via-amber-500/40 to-transparent pointer-events-none"></div>
 
-      {/* Subtle gold vertical accent line — right */}
-      <div className="absolute right-[6%] sm:right-[8%] top-[15%] bottom-[15%] w-[2px] bg-gradient-to-b from-transparent via-amber-500/40 to-transparent pointer-events-none"></div>
-
+      
       {/* Text Lines */}
       <div className="relative z-10 flex flex-col items-center justify-center gap-2 sm:gap-4 md:gap-6 px-4 py-20 sm:py-28">
         {TEXT_LINES.map((line, idx) => (
@@ -248,18 +236,7 @@ const TextPage = () => {
       </div>
 
       {/* Side text decorations — rotated vertical text */}
-      <div
-        className="hidden md:block absolute left-[3%] top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[10px] tracking-[0.3em] uppercase text-white/20 pointer-events-none select-none"
-        style={{ fontFamily: "'Gilroy', sans-serif" }}
-      >
-        limitless studio — design without boundaries
-      </div>
-      <div
-        className="hidden md:block absolute right-[3%] top-1/2 -translate-y-1/2 rotate-90 origin-center text-[10px] tracking-[0.3em] uppercase text-white/20 pointer-events-none select-none"
-        style={{ fontFamily: "'Gilroy', sans-serif" }}
-      >
-        where ambition meets execution — est. 2025
-      </div>
+     
     </div>
   );
 };

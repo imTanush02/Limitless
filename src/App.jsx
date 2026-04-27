@@ -38,6 +38,17 @@ const App = () => {
 
   return (
     <div className="bg-black w-full h-screen">
+      {/* Fixed stars background — global canvas, persists behind all pages */}
+      <div className="fixed w-full h-screen z-0 bg-black stars-background">
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-110 w-[80vh] h-[80vh] pointer-events-none"></div>
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-120 w-[80vh] h-[80vh] pointer-events-none"></div>
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-130 w-[80vh] h-[80vh] pointer-events-none"></div>
+        <img
+          src="/images/stars.png"
+          alt="Stars"
+          className="absolute w-full h-full object-cover pointer-events-none opacity-90"
+        />
+      </div>
       <FixedUI />
       <Landing />
       <VideoPage />

@@ -140,7 +140,7 @@ const WorkWeDo = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-black text-white overflow-hidden"
+      className="workwedo-section relative w-full  text-white overflow-hidden"
       style={{ height: "100vh" }}
     >
       {/* ── Background noise texture ── */}

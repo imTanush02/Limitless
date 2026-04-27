@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <div className="relative w-full h-screen bg-[#0a0a0a] overflow-hidden flex flex-col justify-between font-sans text-white">
+    <div className="footer-section relative w-full h-screen bg-[#0a0a0a] overflow-hidden flex flex-col justify-between font-sans text-white">
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
         <img 
