@@ -30,9 +30,47 @@ const OurProcess = () => {
   const titleRefs = useRef([]);
   const numberRefs = useRef([]);
   const detailRefs = useRef([]);
+  const canvasRef = useRef(null);
+  const imagesRef = useRef([]);
 
   useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
+    const frameCount = 239;
+    if (imagesRef.current.length === 0) {
+      for (let i = 1; i <= frameCount; i++) {
+        const img = new Image();
+        img.src = `/images/ourprocess/frame_${String(i).padStart(4, '0')}.jpeg`;
+        imagesRef.current.push(img);
+      }
+    }
+
+    const canvas = canvasRef.current;
+    const ctx = canvas ? canvas.getContext('2d') : null;
+    const frames = { currentIndex: 1 };
+
+    const render = (index) => {
+      if (!ctx || !canvas || !imagesRef.current[index - 1]) return;
+      const img = imagesRef.current[index - 1];
+      
+      const draw = () => {
+        if (frames.currentIndex !== index) return;
+        
+        if (canvas.width !== img.width || canvas.height !== img.height) {
+          canvas.width = img.width || 1920;
+          canvas.height = img.height || 1080;
+        }
+        ctx.drawImage(img, 0, 0);
+      };
+
+      if (img.complete) {
+        draw();
+      } else {
+        img.onload = draw;
+      }
+    };
+
+    render(1);
+
+    let gsapCtx = gsap.context(() => {
       // Set initial states for elements except the first one
       gsap.set(titleRefs.current.slice(1), { autoAlpha: 0, y: 50 });
       gsap.set(numberRefs.current.slice(1), { autoAlpha: 0, y: 50 });
@@ -42,9 +80,9 @@ const OurProcess = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${processes.length * 800}`, // 800px scroll distance per step
+          end: `+=${processes.length * 1000}`, // Increased scroll distance for more control
           pin: true,
-          scrub: 1,
+          scrub: true, // Direct sync with scroll for "simultaneous" feel
           snap: {
             snapTo: 1 / (processes.length - 1),
             duration: 0.3,
@@ -54,30 +92,39 @@ const OurProcess = () => {
         }
       });
 
+      // Animate the frames across the entire timeline
+      tl.to(frames, {
+        currentIndex: frameCount,
+        snap: "currentIndex",
+        ease: "none",
+        duration: processes.length - 1,
+        onUpdate: () => render(frames.currentIndex)
+      }, 0);
+
       processes.forEach((_, i) => {
         if (i === 0) return;
 
         // Animate out the previous step and animate in the current step simultaneously
-        tl.to(titleRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 1, ease: "power2.inOut" }, `step${i}`)
-          .to(numberRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 1, ease: "power2.inOut" }, `step${i}`)
-          .to(detailRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 1, ease: "power2.inOut" }, `step${i}`)
+        // We use a shorter duration (0.5) to make the transition feel more active during the scroll
+        tl.to(titleRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
+          .to(numberRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
+          .to(detailRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
           
-          .to(titleRefs.current[i], { autoAlpha: 1, y: 0, duration: 1, ease: "power2.inOut" }, `step${i}`)
-          .to(numberRefs.current[i], { autoAlpha: 1, y: 0, duration: 1, ease: "power2.inOut" }, `step${i}`)
-          .to(detailRefs.current[i], { autoAlpha: 1, y: 0, duration: 1, ease: "power2.inOut" }, `step${i}`);
+          .to(titleRefs.current[i], { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
+          .to(numberRefs.current[i], { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
+          .to(detailRefs.current[i], { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, `step${i}`);
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => gsapCtx.revert();
   }, []);
 
   return (
     <div ref={containerRef} className="process-section w-full h-screen relative bg-[#0a0a0a] text-white overflow-hidden font-sans">
-      {/* Background Image */}
+      {/* Background Video/Frames */}
       <div className="absolute inset-0 w-full h-full">
-        <img 
-          src="/images/process_bg.png" 
-          alt="Process Background" 
+        <canvas 
+          ref={canvasRef}
           className="w-full h-full object-cover opacity-70"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div> {/* Subtle dark overlay for text readability */}
