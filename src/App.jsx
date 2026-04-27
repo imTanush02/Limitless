@@ -50,12 +50,12 @@ const App = () => {
         />
       </div>
       <FixedUI />
-      <Landing />
-      <VideoPage />
-      <TextPage />
-      <Work />
-      <WorkWeDo />
-      <OurProcess />
+      {/* <Landing /> */}
+      {/* <VideoPage /> */}
+      {/* <TextPage /> */}
+      {/* <Work /> */}
+      {/* <WorkWeDo /> */}
+      {/* <OurProcess /> */}
       <Talk />
       <Footer />
     </div>

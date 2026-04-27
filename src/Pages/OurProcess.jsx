@@ -45,6 +45,12 @@ const OurProcess = () => {
           end: `+=${processes.length * 800}`, // 800px scroll distance per step
           pin: true,
           scrub: 1,
+          snap: {
+            snapTo: 1 / (processes.length - 1),
+            duration: 0.3,
+            delay: 0.1,
+            ease: "power1.inOut"
+          }
         }
       });
 
@@ -83,13 +89,13 @@ const OurProcess = () => {
         {/* Top Section: Title and Number */}
         <div className="flex justify-between items-start pt-10">
           <div>
-            <h2 className="text-lg md:text-xl font-light text-white/70 mb-1">Our process</h2>
-            <div className="relative h-20 w-80">
+            <h2 className="text-lg md:text-[50px] text-white">Our process</h2>
+            <div className="relative">
               {processes.map((p, i) => (
                 <h1 
                   key={p.id} 
                   ref={el => titleRefs.current[i] = el}
-                  className="absolute top-0 left-0 text-5xl md:text-7xl font-medium tracking-tight text-white/90"
+                  className="absolute top-0 left-0 text-5xl md:text-5xl font-light tracking-tight text-white/70"
                 >
                   {p.title}
                 </h1>
@@ -138,35 +144,6 @@ const OurProcess = () => {
         </div>
       </div>
 
-      {/* Decorative Fixed UI Elements within the section */}
-      {/* Scroll indicator - Left */}
-      <div className="absolute left-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-8 hidden lg:flex z-10">
-         <div className="text-[10px] tracking-[0.4em] -rotate-90 origin-left translate-x-4 text-white/40 font-medium uppercase">
-           SCROLL
-         </div>
-         <div className="flex flex-col gap-2 mt-12">
-            {[...Array(8)].map((_, i) => (
-              <span key={i} className="w-[3px] h-[3px] rounded-full bg-white/30"></span>
-            ))}
-         </div>
-      </div>
-
-      {/* Right Indicator bar */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col items-center gap-3 hidden lg:flex z-10">
-         <div className="flex flex-col gap-2 mb-2">
-            {[...Array(4)].map((_, i) => (
-              <span key={i} className="w-[3px] h-[3px] rounded-full bg-white/30"></span>
-            ))}
-         </div>
-         <div className="w-[2px] h-32 bg-white/10 relative rounded-full overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1/3 bg-orange-500/80 rounded-full"></div>
-         </div>
-         <div className="flex flex-col gap-2 mt-2">
-            {[...Array(4)].map((_, i) => (
-              <span key={i} className="w-[3px] h-[3px] rounded-full bg-white/30"></span>
-            ))}
-         </div>
-      </div>
     </div>
   );
 };

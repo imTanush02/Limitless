@@ -166,7 +166,7 @@ const FixedUI = () => {
   return (
     <div className="fixed inset-0 z-[1000] pointer-events-none font-sans text-white">
       {/* Top Left Logo */}
-      <div className="absolute top-10 left-10 xl:top-12 xl:left-14 2xl:top-14 2xl:left-16 pointer-events-auto flex items-center gap-3">
+      <div className="absolute top-10 left-10 xl:top-12 xl:left-14 2xl:top-8 2xl:left-16 pointer-events-auto flex items-center gap-3">
         <img src="/images/logo.png" alt="" className="w-[40%]" />
       </div>
 

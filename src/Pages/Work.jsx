@@ -75,7 +75,7 @@ const Work = () => {
   return (
     <div
       ref={container}
-      className="work-section relative w-full min-h-screen bg-transparent font-sans text-white overflow-hidden"
+      className="work-section relative w-full h-[95%] bg-transparent font-sans text-white overflow-hidden"
     >
 
       {/* Subtle noise texture overlay */}
@@ -88,23 +88,16 @@ const Work = () => {
 
       {/* ── Main Content ── */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-20 lg:py-24">
-        {/* Section label */}
-        <p
-          className="text-[11px] tracking-[0.3em] uppercase text-white/40 mb-12"
-          style={{ fontFamily: "'Gilroy', sans-serif" }}
-        >
-          work
-        </p>
 
         {/* ── Bento Grid Layout ── */}
         <div className="grid grid-cols-12 gap-3 sm:gap-4 auto-rows-auto">
           {/* ── LEFT COLUMN: Text + Awards + Team ── */}
-          <div className="col-span-12 lg:col-span-4 flex flex-col gap-3 sm:gap-4">
+          <div className="col-span-12 lg:col-span-4 flex flex-col justify-between">
             {/* Title block */}
             <div className="work-left-content">
               <h2
-                className="text-[36px] sm:text-[44px] lg:text-[52px] font-normal leading-[1.1] mb-2"
-                style={{ fontFamily: "'Catavalo', Georgia, serif", color: "#FFFBFE" }}
+                className="text-[36px] sm:text-[44px] lg:text-[35px] font-normal leading-[1.1]"
+                style={{ fontFamily: "Gilroy", color: "#FFFBFE" }}
               >
                 Our work
               </h2>
@@ -115,184 +108,188 @@ const Work = () => {
                 Team Cyphers
               </p>
             </div>
+            <div>
 
-            {/* Description text */}
-            <div className="work-left-content mt-4 lg:mt-8">
-              <p
-                className="text-[12px] sm:text-[13px] leading-relaxed text-white/50 max-w-[340px]"
-                style={{ fontFamily: "'Gilroy', sans-serif" }}
-              >
-                For 25 years, Tripadvisor has been the world's travel companion,
-                with real reviews, real advice, straight from real people. But in
-                a race to compete with booking engines and comparison sites on
-                price and capacity, the brand risked losing its edge. We set out
-                to refocus on what makes Tripadvisor unique: its community of
-                real travelers, and their real reviews.
-              </p>
-            </div>
-
-            {/* Team member card */}
-            <div className="work-left-content flex items-center gap-3 mt-6 lg:mt-10">
-              <div className="w-[40px] h-[40px] rounded-full bg-white/10 overflow-hidden border border-white/20 flex-shrink-0">
-                <img
-                  src="/images/astro.png"
-                  alt="Team Cyphers"
-                  className="w-full h-full object-cover"
-                />
+              {/* Description text */}
+              <div className="work-left-content mt-4 lg:mt-8">
+                <p
+                  className="text-[12px] sm:text-[13px] leading-relaxed text-white/50 max-w-[340px]"
+                  style={{ fontFamily: "'Gilroy', sans-serif" }}
+                >
+                  For 25 years, Tripadvisor has been the world's travel companion,
+                  with real reviews, real advice, straight from real people. But in
+                  a race to compete with booking engines and comparison sites on
+                  price and capacity, the brand risked losing its edge. We set out
+                  to refocus on what makes Tripadvisor unique: its community of
+                  real travelers, and their real reviews.
+                </p>
               </div>
-              <div>
-                <p
-                  className="text-[13px] font-medium text-white underline underline-offset-2"
-                  style={{ fontFamily: "'Gilroy', sans-serif" }}
-                >
-                  Team Cyphers
-                </p>
-                <p
-                  className="text-[10px] text-white/40 tracking-wide"
-                  style={{ fontFamily: "'Gilroy', sans-serif" }}
-                >
-                  2024 &nbsp;·&nbsp; Hack-A-Thon
-                </p>
+
+              {/* Team member card */}
+              <div className="work-left-content flex items-center gap-3 mt-6">
+                <div className="w-[40px] h-[40px] bg-white/10 overflow-hidden border border-white/20 flex-shrink-0">
+                  <img
+                    src="/images/astro.png"
+                    alt="Team Cyphers"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <p
+                    className="text-[13px] font-medium text-white"
+                    style={{ fontFamily: "'Gilroy', sans-serif" }}
+                  >
+                    Team Cyphers
+                  </p>
+                  <p
+                    className="text-[10px] text-white/40 tracking-wide"
+                    style={{ fontFamily: "'Gilroy', sans-serif" }}
+                  >
+                    2024 &nbsp;·&nbsp; Hack-A-Thon
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* ── RIGHT GRID: Images + Stats ── */}
-          <div className="col-span-12 lg:col-span-8 grid grid-cols-2 gap-3 sm:gap-4">
-            {/* Image 01 — tall */}
-            <div className="work-card relative rounded-md overflow-hidden row-span-2 group cursor-pointer">
-              <img
-                src="/images/work1.png"
-                alt="Project 01"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ minHeight: "340px" }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-              <span
-                className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60"
-                style={{ fontFamily: "'Gilroy', sans-serif" }}
-              >
-                01
-              </span>
-            </div>
+          <div className="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-[40%_60%] gap-3 sm:gap-4">
 
-            {/* Image 02 — top right */}
-            <div className="work-card relative rounded-md overflow-hidden group cursor-pointer">
-              <img
-                src="/images/work2.png"
-                alt="Project 02"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ minHeight: "160px", aspectRatio: "16/10" }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-              <span
-                className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60"
-                style={{ fontFamily: "'Gilroy', sans-serif" }}
-              >
-                02
-              </span>
-            </div>
-
-            {/* Awards + Images Row */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 col-span-1">
-              {/* Image 03 */}
-              <div className="work-card relative rounded-md overflow-hidden group cursor-pointer">
+            {/* ── LEFT COLUMN ── */}
+            <div className="flex flex-col gap-3 sm:gap-4">
+              {/* Image 01 — tall with awards */}
+              <div className="work-card relative rounded-md overflow-hidden group cursor-pointer flex-1 min-h-[400px] flex flex-col justify-end">
                 <img
-                  src="/images/work3.png"
-                  alt="Project 03"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: "160px", aspectRatio: "1/1" }}
+                  src="/images/work1.png"
+                  alt="Project 01"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
                 <span
-                  className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60"
+                  className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60 z-10"
                   style={{ fontFamily: "'Gilroy', sans-serif" }}
                 >
-                  03
+                  01
                 </span>
-              </div>
 
-              {/* Image 04 */}
-              <div className="work-card relative rounded-md overflow-hidden group cursor-pointer">
-                <img
-                  src="/images/work4.png"
-                  alt="Project 04"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: "160px", aspectRatio: "1/1" }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-                <span
-                  className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60"
-                  style={{ fontFamily: "'Gilroy', sans-serif" }}
-                >
-                  04
-                </span>
-              </div>
-            </div>
-
-            {/* ── Awards Timeline ── */}
-            <div className="work-card col-span-2 lg:col-span-1 flex flex-col justify-center gap-3 px-5 py-4 rounded-md border border-white/10 bg-white/[0.03]">
-              {AWARDS.map((award, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between gap-4"
-                >
-                  <span
-                    className="text-[12px] text-white/50 tracking-wide shrink-0"
-                    style={{ fontFamily: "'Gilroy', sans-serif" }}
-                  >
-                    {award.year}
-                  </span>
-                  <div className="flex-1 h-[1px] bg-white/10"></div>
-                  <span
-                    className="text-[12px] text-white/80 tracking-wide text-right"
-                    style={{ fontFamily: "'Gilroy', sans-serif" }}
-                  >
-                    {award.title}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* ── Stats Counter + CTA ── */}
-            <div className="work-stats work-card col-span-2 lg:col-span-1 flex flex-col justify-between rounded-md border border-white/10 bg-white/[0.03] p-5 sm:p-6">
-              {/* CTA Row */}
-              <div className="flex items-center justify-between mb-6">
-                <span
-                  className="text-[10px] tracking-[0.2em] uppercase text-white/50"
-                  style={{ fontFamily: "'Gilroy', sans-serif" }}
-                >
-                  Visit now and experience
-                </span>
-                <div className="w-[36px] h-[36px] rounded-md border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors duration-300">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-4 h-4 text-white/70"
-                  >
-                    <path d="M7 17L17 7" />
-                    <path d="M7 7h10v10" />
-                  </svg>
+                {/* ── Awards Timeline overlaid on Image 01 ── */}
+                <div className="relative z-10 flex flex-col gap-3 p-5 pb-6 w-full mt-auto">
+                  {AWARDS.map((award, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between gap-4"
+                    >
+                      <span
+                        className="text-[13px] text-white/90 tracking-wide shrink-0"
+                        style={{ fontFamily: "'Gilroy', sans-serif" }}
+                      >
+                        {award.year}
+                      </span>
+                      <div className="flex-1 h-[1px] bg-white/30"></div>
+                      <span
+                        className="text-[13px] text-white tracking-wide text-right font-medium"
+                        style={{ fontFamily: "'Gilroy', sans-serif" }}
+                      >
+                        {award.title}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* Big number */}
-              <h3
-                className="text-[56px] sm:text-[72px] lg:text-[80px] font-bold leading-none tracking-tight"
-                style={{ fontFamily: "'Catavalo', Georgia, serif", color: "#FFFBFE" }}
-              >
-                10M+
-              </h3>
+              {/* ── Stats Counter + CTA ── */}
+              <div className="work-stats work-card relative rounded-md overflow-hidden bg-white/[0.03] border border-white/10 p-5 sm:p-6 shrink-0 h-[160px] flex flex-col justify-between group cursor-pointer backdrop-blur-md">
+                {/* CTA Row */}
+                <div className="relative z-10 flex items-start justify-between">
+                  <span
+                    className="text-[12px] text-white/80"
+                    style={{ fontFamily: "'Gilroy', sans-serif" }}
+                  >
+                    Visit now and experience
+                  </span>
+                  <div className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      className="w-7 h-7 text-white"
+                    >
+                      <path d="M7 17L17 7" strokeLinecap="square" strokeLinejoin="miter" />
+                      <path d="M7 7h10v10" strokeLinecap="square" strokeLinejoin="miter" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Big number */}
+                <h3
+                  className="relative z-10 text-[56px] sm:text-[64px] font-medium leading-none tracking-tight"
+                  style={{ fontFamily: "'Gilroy', sans-serif", color: "#FFFBFE" }}
+                >
+                  10M+
+                </h3>
+              </div>
             </div>
+
+            {/* ── RIGHT COLUMN ── */}
+            <div className="flex flex-col gap-3 sm:gap-4">
+              {/* Image 02 — wide */}
+              <div className="work-card relative rounded-md overflow-hidden group cursor-pointer h-[240px] shrink-0">
+                <img
+                  src="/images/work2.png"
+                  alt="Project 02"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                <span
+                  className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60 z-10"
+                  style={{ fontFamily: "'Gilroy', sans-serif" }}
+                >
+                  02
+                </span>
+              </div>
+
+              {/* Image 03 & 04 Row */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 flex-1">
+                {/* Image 03 */}
+                <div className="work-card relative rounded-md overflow-hidden group cursor-pointer min-h-[250px]">
+                  <img
+                    src="/images/work3.png"
+                    alt="Project 03"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                  <span
+                    className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60 z-10"
+                    style={{ fontFamily: "'Gilroy', sans-serif" }}
+                  >
+                    03
+                  </span>
+                </div>
+
+                {/* Image 04 */}
+                <div className="work-card relative rounded-md overflow-hidden group cursor-pointer min-h-[250px]">
+                  <img
+                    src="/images/work4.png"
+                    alt="Project 04"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                  <span
+                    className="absolute top-4 left-4 text-[11px] tracking-[0.15em] text-white/60 z-10"
+                    style={{ fontFamily: "'Gilroy', sans-serif" }}
+                  >
+                    04
+                  </span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
-      
+
     </div>
   );
 };
