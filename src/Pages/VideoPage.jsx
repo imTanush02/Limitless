@@ -82,16 +82,9 @@ const VideoPage = () => {
   return (
     <div
       ref={container}
-      style={{
-        backgroundImage: "url('/images/stars.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-      className="relative flex -mt-[0.1px] items-center justify-center w-full h-screen bg-black font-sans text-white"
+      className="video-page-section relative flex -mt-[0.1px] items-center justify-center w-full h-screen bg-transparent font-sans text-white"
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50 pointer-events-none"></div>
+
 
       {/* Custom Cursor — follows mouse, hidden on touch devices */}
       {!isTouchDevice && (

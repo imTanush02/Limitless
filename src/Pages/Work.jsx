@@ -75,16 +75,8 @@ const Work = () => {
   return (
     <div
       ref={container}
-      className="relative w-full min-h-screen bg-black font-sans text-white overflow-hidden"
-      style={{
-        backgroundImage: "url('/images/stars.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className="work-section relative w-full min-h-screen bg-transparent font-sans text-white overflow-hidden"
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/70 pointer-events-none"></div>
 
       {/* Subtle noise texture overlay */}
       <div
@@ -300,25 +292,7 @@ const Work = () => {
         </div>
       </div>
 
-      {/* ── Vertical decorative text — Left ── */}
-      <div
-        className="hidden lg:block absolute left-[2%] top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[10px] tracking-[0.3em] uppercase text-white/15 pointer-events-none select-none whitespace-nowrap"
-        style={{ fontFamily: "'Gilroy', sans-serif" }}
-      >
-        limitless studio — our work — scroll ↓
-      </div>
-
-      {/* ── Vertical decorative text — Right ── */}
-      <div
-        className="hidden lg:block absolute right-[2%] top-1/2 -translate-y-1/2 rotate-90 origin-center text-[10px] tracking-[0.3em] uppercase text-white/15 pointer-events-none select-none whitespace-nowrap"
-        style={{ fontFamily: "'Gilroy', sans-serif" }}
-      >
-        limitless studio — design without boundaries — est. 2025
-      </div>
-
-      {/* ── Subtle gold vertical accent lines ── */}
-      <div className="absolute left-[5%] top-[10%] bottom-[10%] w-[1px] bg-gradient-to-b from-transparent via-amber-500/20 to-transparent pointer-events-none"></div>
-      <div className="absolute right-[5%] top-[10%] bottom-[10%] w-[1px] bg-gradient-to-b from-transparent via-amber-500/20 to-transparent pointer-events-none"></div>
+      
     </div>
   );
 };

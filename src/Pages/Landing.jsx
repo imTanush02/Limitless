@@ -24,7 +24,7 @@ const Landing = () => {
       const maskScale = { value: 1 };
       const baseRX = 17; // Starting x
       const baseRY = 50; // Starting y
-      
+
       tl.to(
         maskScale,
         {
@@ -32,10 +32,16 @@ const Landing = () => {
           ease: "power2.inOut",
           onUpdate: () => {
             if (container.current) {
-              const starsBg = container.current.querySelector(".stars-background");
+              const starsBg = document.querySelector(".stars-background");
               if (starsBg) {
-                starsBg.style.setProperty("--mask-x", `${baseRX * maskScale.value}%`);
-                starsBg.style.setProperty("--mask-y", `${baseRY * maskScale.value}%`);
+                starsBg.style.setProperty(
+                  "--mask-x",
+                  `${baseRX * maskScale.value}%`,
+                );
+                starsBg.style.setProperty(
+                  "--mask-y",
+                  `${baseRY * maskScale.value}%`,
+                );
               }
             }
           },
@@ -44,11 +50,10 @@ const Landing = () => {
       );
       tl.fromTo(
         "#sunset-gate img",
-        { scale: 1,  },
+        { scale: 1 },
         {
           scale: 1.2,
           ease: "power2.inOut",
-          
         },
         0,
       );
@@ -66,7 +71,7 @@ const Landing = () => {
         "#portal-container",
         {
           scale: 1.8,
-      
+
           transformOrigin: "center bottom",
           ease: "power2.inOut",
         },
@@ -92,7 +97,7 @@ const Landing = () => {
           y: 0,
           ease: "power2.out",
         },
-        0.1,
+        0.3,
       );
     },
     { scope: container },
@@ -101,17 +106,16 @@ const Landing = () => {
   return (
     <div
       ref={container}
-      className="landing-section relative w-full h-screen bg-white overflow-hidden font-sans text-white"
+      className="landing-section relative w-full h-screen   overflow-hidden font-sans text-white"
     >
       {/* Main Center Content */}
       <div className="relative w-full h-full flex flex-col items-center justify-end pb-0">
         {/* 1. SUNSET GATE (bg.png) - Bottom layer */}
-       
 
         {/* 2. ASTRONAUT - Above sunset sky */}
         <div
           id="astronaut-container"
-          className="absolute z-[20] -bottom-10 left-[30vw] w-[40vw] h-[80vh]"
+          className="absolute z-[20]  left-[30vw] w-[40vw] h-[80vh]"
         >
           <img
             src="/images/astro.png"
@@ -121,33 +125,29 @@ const Landing = () => {
         </div>
         <div
           id="portal-container"
-          className="absolute z-10 bottom-0 left-0 w-full h-full scale-60"
+          className="absolute z-10 bottom-0 left-0 w-full h-full scale-70"
           style={{ transformOrigin: "center bottom", willChange: "transform" }}
         >
           <img
             src="/images/portal.png"
             alt="portal"
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 object-contain pointer-events-none drop-shadow-xl"
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 object-contain pointer-events-none"
+            style={{
+              filter: `
+                drop-shadow(0 0 20px rgba(255, 154, 120, 0.5))
+                drop-shadow(0 0 60px rgba(255, 140, 105, 0.35))
+                drop-shadow(0 0 120px rgba(200, 130, 180, 0.25))
+                drop-shadow(0 0 200px rgba(120, 140, 220, 0.2))
+              `,
+            }}
           />
         </div>
 
-        {/* 3. STARS BACKGROUND - Above astronaut */}
-        <div
-          className="absolute w-full  h-screen z-0 bg-black stars-background"
-         
-        >
-          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-110 w-[80vh] h-[80vh] pointer-events-none"></div>
-          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-120 w-[80vh] h-[80vh] pointer-events-none"></div>
-          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 border-[1px] bg-transparent border-white/20 rounded-full scale-130 w-[80vh] h-[80vh] pointer-events-none"></div>
-          <img
-            src="/images/stars.png"
-            alt="Stars"
-            className="absolute w-full h-full object-cover pointer-events-none opacity-90"
-          />
-        </div>
+
+
 
         {/* 4. LIMITLESS STUDIO TEXT & SUBTITLE - Above stars */}
-        <div className="main-title absolute top-[220px] left-0 w-full text-center z-30 pointer-events-none mix-blend-difference">
+        <div className="main-title absolute top-[20vh] left-0 w-full text-center z-30 pointer-events-none mix-blend-difference">
           <h1
             className="text-[64px] sm:text-[96px] xl:text-[128px] font-normal leading-none inline-block"
             style={{
@@ -160,7 +160,7 @@ const Landing = () => {
         </div>
 
         {/* Subtitle */}
-        <div className="main-subtitle absolute top-[300px] sm:top-[340px] xl:top-[360px] left-0 w-full text-center z-30 pointer-events-none">
+        <div className="main-subtitle absolute top-[20vh] sm:top-[25vh] xl:top-[278px] left-0 w-full text-center z-30 pointer-events-none">
           <p
             className="text-sm sm:text-lg md:text-[20px] font-light text-white tracking-wide drop-shadow-md"
             style={{ fontFamily: "'Gilroy', sans-serif" }}

@@ -2,16 +2,7 @@ import React from 'react';
 
 const Talk = () => {
   return (
-    <div className="w-full h-[80vh] relative bg-[#0a0a0a] text-white overflow-hidden font-sans">
-      {/* Background Image */}
-      <div className="absolute inset-0 w-full h-full">
-        <img 
-          src="/images/stars.png" 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/80"></div>
-      </div>
+    <div className="talk-section w-full h-[80vh] relative bg-transparent text-white overflow-hidden font-sans">
 
       {/* Main Content Area */}
       <div className="relative w-full h-full flex items-center px-10 md:px-32 lg:px-48 mx-auto z-10">
