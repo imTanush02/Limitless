@@ -132,19 +132,8 @@ const Landing = () => {
             src="/images/portal.png"
             alt="portal"
             className="absolute bottom-0 left-1/2 -translate-x-1/2 object-contain pointer-events-none"
-            style={{
-              filter: `
-                drop-shadow(0 0 20px rgba(255, 154, 120, 0.5))
-                drop-shadow(0 0 60px rgba(255, 140, 105, 0.35))
-                drop-shadow(0 0 120px rgba(200, 130, 180, 0.25))
-                drop-shadow(0 0 200px rgba(120, 140, 220, 0.2))
-              `,
-            }}
           />
         </div>
-
-
-
 
         {/* 4. LIMITLESS STUDIO TEXT & SUBTITLE - Above stars */}
         <div className="main-title absolute top-[20vh] left-0 w-full text-center z-30 pointer-events-none mix-blend-difference">
