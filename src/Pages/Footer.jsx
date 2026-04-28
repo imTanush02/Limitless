@@ -3,11 +3,14 @@ import React from 'react';
 const Footer = () => {
   return (
     <div className="footer-section relative w-full h-screen bg-[#0a0a0a] overflow-hidden flex flex-col justify-between font-sans text-white">
-      {/* Background Image */}
+      {/* Background Video */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-        <img 
-          src="/images/process_bg.png" 
+        <video
+          src="/video/footer.mp4" 
           alt="Footer Background" 
+          muted
+          loop
+          autoPlay
           className="w-full h-full object-cover opacity-80"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/80"></div>
