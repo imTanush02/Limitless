@@ -129,7 +129,7 @@ const Work = () => {
               <div className="work-left-content flex items-center gap-3 mt-6">
                 <div className="w-[40px] h-[40px] bg-white/10 overflow-hidden border border-white/20 flex-shrink-0">
                   <img
-                    src="/images/astro.png"
+                    src="/images/3.jpg"
                     alt="Team Cyphers"
                     className="w-full h-full object-cover"
                   />
@@ -158,9 +158,9 @@ const Work = () => {
             {/* ── LEFT COLUMN ── */}
             <div className="flex flex-col gap-3 sm:gap-4">
               {/* Image 01 — tall with awards */}
-              <div className="work-card relative rounded-md overflow-hidden group cursor-pointer flex-1 min-h-[400px] flex flex-col justify-end">
+              <div className="work-card relative rounded-md overflow-hidden group  flex-1 min-h-[400px] flex flex-col justify-end">
                 <img
-                  src="/images/work1.png"
+                  src="/images/1.jpg"
                   alt="Project 01"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -198,7 +198,7 @@ const Work = () => {
               </div>
 
               {/* ── Stats Counter + CTA ── */}
-              <div className="work-stats work-card relative rounded-md overflow-hidden bg-white/[0.03] border border-white/10 p-5 sm:p-6 shrink-0 h-[160px] flex flex-col justify-between group cursor-pointer backdrop-blur-md">
+              <div className="work-stats work-card relative rounded-md overflow-hidden bg-white/[0.03] border border-white/10 p-5 sm:p-6 shrink-0 h-[160px] flex flex-col justify-between group  backdrop-blur-md">
                 {/* CTA Row */}
                 <div className="relative z-10 flex items-start justify-between">
                   <span
@@ -234,9 +234,9 @@ const Work = () => {
             {/* ── RIGHT COLUMN ── */}
             <div className="flex flex-col gap-3 sm:gap-4">
               {/* Image 02 — wide */}
-              <div className="work-card relative rounded-md overflow-hidden group cursor-pointer h-[240px] shrink-0">
+              <div className="work-card relative rounded-md overflow-hidden group  h-[240px] shrink-0">
                 <img
-                  src="/images/work2.png"
+                  src="/images/2.jpg"
                   alt="Project 02"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
@@ -252,9 +252,9 @@ const Work = () => {
               {/* Image 03 & 04 Row */}
               <div className="grid grid-cols-2 gap-3 sm:gap-4 flex-1">
                 {/* Image 03 */}
-                <div className="work-card relative rounded-md overflow-hidden group cursor-pointer min-h-[250px]">
+                <div className="work-card relative rounded-md overflow-hidden group  min-h-[250px]">
                   <img
-                    src="/images/work3.png"
+                    src="/images/3.jpg"
                     alt="Project 03"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
@@ -268,9 +268,9 @@ const Work = () => {
                 </div>
 
                 {/* Image 04 */}
-                <div className="work-card relative rounded-md overflow-hidden group cursor-pointer min-h-[250px]">
+                <div className="work-card relative rounded-md overflow-hidden group  min-h-[250px]">
                   <img
-                    src="/images/work4.png"
+                    src="/images/4.jpg"
                     alt="Project 04"
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />

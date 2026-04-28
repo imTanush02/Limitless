@@ -71,6 +71,10 @@ const OurProcess = () => {
     render(1);
 
     let gsapCtx = gsap.context(() => {
+      const steps = processes.length;       // 3
+      const transitions = steps - 1;        // 2 transitions
+      const framesPerStep = Math.floor(frameCount / steps);
+
       // Set initial states for elements except the first one
       gsap.set(titleRefs.current.slice(1), { autoAlpha: 0, y: 50 });
       gsap.set(numberRefs.current.slice(1), { autoAlpha: 0, y: 50 });
@@ -80,40 +84,47 @@ const OurProcess = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${processes.length * 1000}`, // Increased scroll distance for more control
+          end: `+=${steps * 1200}`,
           pin: true,
-          scrub: true, // Direct sync with scroll for "simultaneous" feel
+          scrub: 0.6,
           snap: {
-            snapTo: 1 / (processes.length - 1),
-            duration: 0.3,
+            snapTo: 1 / transitions,
+            duration: 0.4,
             delay: 0.1,
             ease: "power1.inOut"
           }
         }
       });
 
-      // Animate the frames across the entire timeline
-      tl.to(frames, {
-        currentIndex: frameCount,
-        snap: "currentIndex",
-        ease: "none",
-        duration: processes.length - 1,
-        onUpdate: () => render(frames.currentIndex)
-      }, 0);
+      // Each transition: frames + text change at the SAME time
+      for (let i = 0; i < transitions; i++) {
+        const startFrame = i * framesPerStep + 1;
+        const endFrame = (i + 1) * framesPerStep;
+        const segmentFrames = { currentIndex: startFrame };
+        const pos = i; // timeline position
 
-      processes.forEach((_, i) => {
-        if (i === 0) return;
+        // Frame sequence for this segment
+        tl.to(segmentFrames, {
+          currentIndex: endFrame,
+          snap: "currentIndex",
+          ease: "none",
+          duration: 1,
+          onUpdate: () => {
+            frames.currentIndex = segmentFrames.currentIndex;
+            render(frames.currentIndex);
+          }
+        }, pos);
 
-        // Animate out the previous step and animate in the current step simultaneously
-        // We use a shorter duration (0.5) to make the transition feel more active during the scroll
-        tl.to(titleRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
-          .to(numberRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
-          .to(detailRefs.current[i - 1], { autoAlpha: 0, y: -50, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
-          
-          .to(titleRefs.current[i], { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
-          .to(numberRefs.current[i], { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, `step${i}`)
-          .to(detailRefs.current[i], { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.inOut" }, `step${i}`);
-      });
+        // Text out (previous step)
+        tl.to(titleRefs.current[i], { autoAlpha: 0, y: -50, duration: 1, ease: "power2.inOut" }, pos);
+        tl.to(numberRefs.current[i], { autoAlpha: 0, y: -50, duration: 1, ease: "power2.inOut" }, pos);
+        tl.to(detailRefs.current[i], { autoAlpha: 0, y: -50, duration: 1, ease: "power2.inOut" }, pos);
+
+        // Text in (next step)
+        tl.to(titleRefs.current[i + 1], { autoAlpha: 1, y: 0, duration: 1, ease: "power2.inOut" }, pos);
+        tl.to(numberRefs.current[i + 1], { autoAlpha: 1, y: 0, duration: 1, ease: "power2.inOut" }, pos);
+        tl.to(detailRefs.current[i + 1], { autoAlpha: 1, y: 0, duration: 1, ease: "power2.inOut" }, pos);
+      }
     }, containerRef);
 
     return () => gsapCtx.revert();

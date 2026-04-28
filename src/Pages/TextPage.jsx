@@ -1,40 +1,33 @@
-import React, { useRef, useState, useCallback } from "react";
+import React, { useRef, useState, useCallback, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Text lines with their associated project card images
+// All project images that cycle on hover
+const POPUP_IMAGES = [
+  "/images/WWD1.jpg",
+  "/images/WWD2.jpg",
+  "/images/WWD3.jpg",
+  "/images/WWD4.jpg",
+];
+
+// Text lines — only the last line has a hoverable highlight
 const TEXT_LINES = [
-  {
-    text: `IT'S NEVER "JUST A WEBSITE."`,
-    cards: ["/images/project1.png"],
-  },
-  {
-    text: "EVERY PIXEL MATTERS.",
-    cards: ["/images/project2.png"],
-  },
-  {
-    text: "WE CRAFT DIGITAL EXPERIENCES.",
-    cards: ["/images/project3.png"],
-  },
-  {
-    text: "YOUR DESIGN IS OUR OBSESSION.",
-    cards: ["/images/project5.png"],
-  },
-  {
-    text: "YOUR BRAND. OUR",
-    highlight: "PLAYGROUND.",
-    cards: ["/images/project4.png"],
-  },
+  { text: `IT'S NEVER "JUST A WEBSITE."` },
+  { text: "EVERY PIXEL MATTERS." },
+  { text: "WE CRAFT DIGITAL EXPERIENCES." },
+  { text: "YOUR DESIGN IS OUR OBSESSION." },
+  { text: "YOUR BRAND. OUR", highlight: "PLAYGROUND." },
 ];
 
 const TextPage = () => {
   const container = useRef(null);
-  const [activeLineIdx, setActiveLineIdx] = useState(-1);
-  const cardRefs = useRef([]);
-  const animTimelines = useRef([]);
+  const cardsContainerRef = useRef(null);
+  const loopInterval = useRef(null);
+  const activeCardIdx = useRef(0);
+  const [isHovering, setIsHovering] = useState(false);
 
   // Scroll-triggered entrance animation for text lines
   useGSAP(
@@ -62,97 +55,109 @@ const TextPage = () => {
     { scope: container }
   );
 
-  // Handle hover enter — pop out cards with a fanned stagger
-  const handleLineEnter = useCallback((idx) => {
-    setActiveLineIdx(idx);
-
-    // Kill any running anim on this line
-    if (animTimelines.current[idx]) {
-      animTimelines.current[idx].kill();
-    }
-
-    const cardsEl = cardRefs.current[idx];
+  // Pop in a card — stacks on top of previous ones
+  const popCard = useCallback((index) => {
+    const cardsEl = cardsContainerRef.current;
     if (!cardsEl) return;
 
     const cards = cardsEl.querySelectorAll(".popup-card");
     if (!cards.length) return;
 
-    const tl = gsap.timeline();
+    const card = cards[index % cards.length];
+    if (!card) return;
 
-    // Fan out from the center
-    const rotations = [-12, 0, 12];
-    const xOffsets = [-100, 0, 100]; // percentage offsets for fanning
+    // Random slight rotation for organic feel
+    const randomRotation = (Math.random() - 0.5) * 12; // -6 to +6 degrees
 
-    tl.to(cardsEl, {
+    // Bring this card to top of stack
+    card.style.zIndex = index + 1;
+
+    // Animate from bottom up onto the pile
+    gsap.fromTo(
+      card,
+      {
+        opacity: 0,
+        scale: 0.85,
+        y: 120,
+        rotation: 0,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        rotation: randomRotation,
+        duration: 0.3,
+        ease: "power3.out",
+      }
+    );
+  }, []);
+
+  // Start looping images on hover
+  const handlePlaygroundEnter = useCallback(() => {
+    setIsHovering(true);
+    activeCardIdx.current = 0;
+
+    const cardsEl = cardsContainerRef.current;
+    if (!cardsEl) return;
+
+    // Reset all cards hidden
+    const cards = cardsEl.querySelectorAll(".popup-card");
+    gsap.set(cards, { opacity: 0, scale: 0.85, y: 120, rotation: 0 });
+
+    // Show the container
+    gsap.to(cardsEl, {
       opacity: 1,
       duration: 0.1,
       pointerEvents: "auto",
     });
 
-    cards.forEach((card, i) => {
-      tl.fromTo(
-        card,
-        {
-          scale: 0.3,
-          opacity: 0,
-   
-          y: 40,
-          x: 0,
-        },
-        {
-          scale: 1,
-          opacity: 1,
-       
-          y: 0,
-          x: xOffsets[i] || 0,
-          duration: 0.45,
-          ease: "back.out(1.7)",
-        },
-        i * 0.08 // stagger
-      );
-    });
+    // Show first card immediately
+    popCard(0);
 
-    animTimelines.current[idx] = tl;
-  }, []);
+    // Loop through cards — keep stacking infinitely
+    loopInterval.current = setInterval(() => {
+      activeCardIdx.current = activeCardIdx.current + 1;
+      popCard(activeCardIdx.current);
+    }, 300);
+  }, [popCard]);
 
-  // Handle hover leave — shrink cards back
-  const handleLineLeave = useCallback((idx) => {
-    setActiveLineIdx(-1);
+  // Stop loop on leave
+  const handlePlaygroundLeave = useCallback(() => {
+    setIsHovering(false);
 
-    if (animTimelines.current[idx]) {
-      animTimelines.current[idx].kill();
+    if (loopInterval.current) {
+      clearInterval(loopInterval.current);
+      loopInterval.current = null;
     }
 
-    const cardsEl = cardRefs.current[idx];
+    const cardsEl = cardsContainerRef.current;
     if (!cardsEl) return;
 
     const cards = cardsEl.querySelectorAll(".popup-card");
-    if (!cards.length) return;
 
-    const tl = gsap.timeline();
-
-    tl.to(cards, {
-      scale: 0.3,
+    // Entire stack slides down and fades
+    gsap.to(cards, {
+      y: 80,
       opacity: 0,
-      rotation: 0,
-      y: 40,
-      x: 0,
+      scale: 0.9,
       duration: 0.3,
       ease: "power2.in",
-      stagger: 0.04,
+      stagger: 0.02,
     });
 
-    tl.to(
-      cardsEl,
-      {
-        opacity: 0,
-        duration: 0.1,
-        pointerEvents: "none",
-      },
-      "-=0.1"
-    );
+    gsap.to(cardsEl, {
+      opacity: 0,
+      duration: 0.15,
+      delay: 0.25,
+      pointerEvents: "none",
+    });
+  }, []);
 
-    animTimelines.current[idx] = tl;
+  // Cleanup interval on unmount
+  useEffect(() => {
+    return () => {
+      if (loopInterval.current) clearInterval(loopInterval.current);
+    };
   }, []);
 
   return (
@@ -160,83 +165,70 @@ const TextPage = () => {
       ref={container}
       className="text-page-section relative flex items-center justify-center w-full min-h-screen bg-transparent font-sans text-white overflow-hidden"
     >
-
-
-      
       {/* Text Lines */}
       <div className="relative z-10 flex flex-col items-center justify-center gap-2 sm:gap-4 md:gap-6 px-4 py-20 sm:py-28">
         {TEXT_LINES.map((line, idx) => (
           <div
             key={idx}
             className="showcase-line relative cursor-default"
-            onMouseEnter={() => handleLineEnter(idx)}
-            onMouseLeave={() => handleLineLeave(idx)}
           >
-            {/* Hoverable text */}
             <h2
-              className="text-center font-bold uppercase tracking-tight leading-none select-none transition-colors duration-300
-                text-5xl"
+              className="text-center font-bold uppercase tracking-tight leading-none select-none text-5xl"
               style={{
-                
-                color: activeLineIdx === idx ? "#fff" : "rgba(255,255,255,0.85)",
-                textShadow:
-                  activeLineIdx === idx
-                    ? "0 0 40px rgba(255,255,255,0.15)"
-                    : "none",
+                color: "rgba(255,255,255,0.85)",
               }}
             >
               {line.text}
               {line.highlight && (
                 <span
-                  className="ml-2 font-light"
+                  className="ml-2 font-light relative inline-block"
                   style={{
                     fontFamily: "'Catavalo', Georgia, serif",
-                    WebkitTextStroke: "0.6px rgba(0,0,0,0.7)",
-                    textDecoration: "underline",
-                    textUnderlineOffset: "6px",
-                    textDecorationThickness: "1px",
+                    color: isHovering ? "#fff" : "rgba(255,255,255,0.85)",
+                    textShadow: isHovering
+                      ? "0 0 40px rgba(255,255,255,0.2)"
+                      : "none",
+                    transition: "color 0.3s, text-shadow 0.3s",
                   }}
+                  onMouseEnter={handlePlaygroundEnter}
+                  onMouseLeave={handlePlaygroundLeave}
                 >
                   {line.highlight}
+                  <span className="absolute bottom-0 left-0 w-full h-[1px] bg-white/70"></span>
                 </span>
               )}
             </h2>
-
-            {/* Popup Cards — positioned absolutely above the text line */}
-            <div
-              ref={(el) => (cardRefs.current[idx] = el)}
-              className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none opacity-0 z-20"
-              style={{ willChange: "opacity" }}
-            >
-              {line.cards.map((src, cardIdx) => (
-                <div
-                  key={cardIdx}
-                  className="popup-card absolute rounded-lg overflow-hidden shadow-2xl shadow-black/60"
-                  style={{
-                    width: "clamp(120px, 18vw, 260px)",
-                    aspectRatio: "3 / 4",
-                    willChange: "transform, opacity",
-                    opacity: 0,
-                    transform: "scale(0.3)",
-                  }}
-                >
-                  <img
-                    src={src}
-                    alt={`Project ${cardIdx + 1}`}
-                    className="w-full h-full object-cover"
-                    draggable="false"
-                  />
-                  {/* Subtle gradient overlay on card */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-                </div>
-              ))}
-            </div>
           </div>
         ))}
-      </div>
 
-      {/* Side text decorations — rotated vertical text */}
-     
+        {/* Popup Cards Container — centered over the text block */}
+        <div
+          ref={cardsContainerRef}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none opacity-0 z-20"
+          style={{ willChange: "opacity" }}
+        >
+          {POPUP_IMAGES.map((src, cardIdx) => (
+            <div
+              key={cardIdx}
+              className="popup-card absolute rounded-lg overflow-hidden shadow-2xl shadow-black/60"
+              style={{
+                width: "250px",
+                willChange: "transform, opacity",
+                opacity: 0,
+                transform: "scale(0.85) translateY(120px)",
+              }}
+            >
+              <img
+                src={src}
+                alt={`Project ${cardIdx + 1}`}
+                className="w-full h-auto block"
+                draggable="false"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
